@@ -2,7 +2,7 @@ class Deck {
   constructor(){
     this.deck = [];
     this.createCards();
-
+    this.shuffleCards();
   }
 
    createCards() {
@@ -16,7 +16,7 @@ class Deck {
         i === 12 ? cardName = 'Queen' : cardName = i;
         i === 13 ? cardName = 'King' : cardName = i;
 
-         this.deck.push( 
+         this.deck.push(
           {
              'CardColor' : suit,
              'CardName': cardName,
@@ -39,12 +39,45 @@ class Deck {
 
       }
     }
-    
+
    }
 
 } // /Deck class
 
+class Player {
+  constructor(name, deck) {
+    this.deck = deck;
+    this.name = name;
+    this.hand = [];
+    this.dealHand(5);
+  }
+
+  // Fix dealing cards with new cards
+  dealHand(numberOfCards){
+    let newCards = this.deck.deck.splice(0, numberOfCards);
+    this.hand = newCards;
+  }
+
+  calcMe(){
+    let calc = 0;
+    for (let i = 0; i < this.hand.length; i++){
+      calc += this.hand[i].CardNumber;
+    }
+    return calc;
+  }
+
+  logMe(){
+    console.log(this.deck);
+    console.log(this.hand, "Total: ", this.calcMe());
+  }
+
+
+}
+
+
 let x = new Deck();
+let slim = new Player('Slim', x);
+let luke = new Player('Luke', x);
 
 
 // class Card {
