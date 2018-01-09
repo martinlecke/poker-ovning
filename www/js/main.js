@@ -2,6 +2,7 @@ class Deck {
   constructor(){
     this.deck = [];
     this.createCards();
+
   }
 
    createCards() {
@@ -9,19 +10,39 @@ class Deck {
 
      for (let suit of cardSuits) {
        for (let i = 1; i < 14; i++){
-         this.deck.push({
-           'CardColor' : suit,
-           'CardNumber' : i
-         });
+        let cardName = i;
+        i === 1 ? cardName = 'Ace' : cardName = i;
+        i === 11 ? cardName = 'Knekt' : cardName = i;
+        i === 12 ? cardName = 'Queen' : cardName = i;
+        i === 13 ? cardName = 'King' : cardName = i;
+
+         this.deck.push( 
+          {
+             'CardColor' : suit,
+             'CardName': cardName,
+             'CardNumber' : i
+          }
+         );
        }
      }
+   } // /CreateCards
 
+   shuffleCards() {
+    for (let j = 0; j < 10; j++) {
+      for (let i = 0; i < this.deck.length; i++) {
 
+        let card = this.deck[i];
+        let random = Math.floor(Math.random() * 52);
 
+        this.deck[i] = this.deck[random];
+        this.deck[random] = card;
 
-  }
+      }
+    }
+    
+   }
 
-}
+} // /Deck class
 
 let x = new Deck();
 
