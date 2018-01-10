@@ -1,6 +1,7 @@
 class Deck {
   constructor(){
     this.deck = [];
+    this.discarded = [];
     this.createCards();
     this.shuffleCards();
   }
@@ -11,10 +12,16 @@ class Deck {
      for (let suit of cardSuits) {
        for (let i = 1; i < 14; i++){
         let cardName = i;
-        i === 1 ? cardName = 'Ace' : cardName = i;
-        i === 11 ? cardName = 'Knekt' : cardName = i;
-        i === 12 ? cardName = 'Queen' : cardName = i;
-        i === 13 ? cardName = 'King' : cardName = i;
+
+        if (i === 1) {
+          cardName = 'Ace'
+        } else if(i === 11) {
+          cardName = 'Knekt'
+        } else if(i === 12) {
+          cardName = 'Queen'
+        } else if(i === 13) {
+          cardName = 'King'
+        }
 
          this.deck.push(
           {
@@ -55,7 +62,17 @@ class Player {
   // Fix dealing cards with new cards
   dealHand(numberOfCards){
     let newCards = this.deck.deck.splice(0, numberOfCards);
-    this.hand = newCards;
+    for (let newCard of newCards) {
+      this.hand.unshift(newCard);
+    }
+  }
+
+  discardCard(numberOfCards) {
+    let discardCards = this.hand.splice(0, numberOfCards);
+    for (let card of discardCards) {
+      this.deck.discarded.push(card);
+    }
+    this.dealHand(numberOfCards);
   }
 
   calcMe(){
